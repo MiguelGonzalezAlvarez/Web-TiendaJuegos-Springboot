@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - GameHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#ec4899',
+                        dark: '#1f2937',
+                        darker: '#111827',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-gradient { background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%); }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-darker border-b border-gray-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a th:href="@{/}" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 hero-gradient rounded-lg flex items-center justify-center">
+                        <i class="fas fa-gamepad text-white text-xl"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">Game<span class="text-primary">Hub</span> <span class="text-gray-500 text-sm">Admin</span></span>
+                </a>
+                <div class="flex items-center space-x-4">
+                    <a th:href="@{/}" class="text-gray-300 hover:text-primary"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex-1 flex">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-gray-800 p-4 hidden md:block">
+            <nav class="space-y-2">
+                <a th:href="@{/admin}" class="flex items-center gap-3 px-4 py-2 bg-primary text-white rounded-lg">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a th:href="@{/admin/productos}" class="flex items-center gap-3 px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-lg">
+                    <i class="fas fa-gamepad"></i> Productos
+                </a>
+                <a th:href="@{/admin/pedidos}" class="flex items-center gap-3 px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-lg">
+                    <i class="fas fa-box"></i> Pedidos
+                </a>
+                <a th:href="@{/admin/usuarios}" class="flex items-center gap-3 px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-lg">
+                    <i class="fas fa-users"></i> Usuarios
+                </a>
+                <a th:href="@{/admin/importar}" class="flex items-center gap-3 px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-lg">
+                    <i class="fas fa-download"></i> Importar RAWG
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6">
+            <h1 class="text-2xl font-bold text-white mb-6">Dashboard</h1>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm">Pedidos hoy</p>
+                            <p class="text-3xl font-bold text-white">24</p>
+                        </div>
+                        <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-shopping-cart text-primary text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm">Revenue mes</p>
+                            <p class="text-3xl font-bold text-white">$12,450</p>
+                        </div>
+                        <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-dollar-sign text-green-500 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm">Productos</p>
+                            <p class="text-3xl font-bold text-white">248</p>
+                        </div>
+                        <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-gamepad text-yellow-500 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm">Usuarios</p>
+                            <p class="text-3xl font-bold text-white">1,234</p>
+                        </div>
+                        <div class="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-users text-secondary text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <div class="bg-gray-800 rounded-xl p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-bold text-white">Pedidos recientes</h2>
+                    <a th:href="@{/admin/pedidos}" class="text-primary hover:underline text-sm">Ver todos</a>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="pb-3 text-gray-400 font-semibold">ID</th>
+                                <th class="pb-3 text-gray-400 font-semibold">Cliente</th>
+                                <th class="pb-3 text-gray-400 font-semibold">Fecha</th>
+                                <th class="pb-3 text-gray-400 font-semibold">Total</th>
+                                <th class="pb-3 text-gray-400 font-semibold">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-700/50">
+                                <td class="py-3 text-white">#GH-001</td>
+                                <td class="py-3 text-gray-300">Juan Pérez</td>
+                                <td class="py-3 text-gray-300">26 Feb 2026</td>
+                                <td class="py-3 text-white">$155.97</td>
+                                <td class="py-3"><span class="bg-green-500/20 text-green-500 px-2 py-1 rounded text-xs">Completado</span></td>
+                            </tr>
+                            <tr class="border-b border-gray-700/50">
+                                <td class="py-3 text-white">#GH-002</td>
+                                <td class="py-3 text-gray-300">María García</td>
+                                <td class="py-3 text-gray-300">26 Feb 2026</td>
+                                <td class="py-3 text-white">$89.99</td>
+                                <td class="py-3"><span class="bg-yellow-500/20 text-yellow-500 px-2 py-1 rounded text-xs">Pendiente</span></td>
+                            </tr>
+                            <tr class="border-b border-gray-700/50">
+                                <td class="py-3 text-white">#GH-003</td>
+                                <td class="py-3 text-gray-300">Carlos López</td>
+                                <td class="py-3 text-gray-300">25 Feb 2026</td>
+                                <td class="py-3 text-white">$249.99</td>
+                                <td class="py-3"><span class="bg-blue-500/20 text-blue-500 px-2 py-1 rounded text-xs">Enviado</span></td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 text-white">#GH-004</td>
+                                <td class="py-3 text-gray-300">Ana Martínez</td>
+                                <td class="py-3 text-gray-300">25 Feb 2026</td>
+                                <td class="py-3 text-white">$59.99</td>
+                                <td class="py-3"><span class="bg-green-500/20 text-green-500 px-2 py-1 rounded text-xs">Completado</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Chart Placeholder -->
+            <div class="mt-8 bg-gray-800 rounded-xl p-6">
+                <h2 class="text-xl font-bold text-white mb-6">Ventas últimos 7 días</h2>
+                <div class="h-64 bg-gray-700/50 rounded-lg flex items-center justify-center">
+                    <div class="text-center text-gray-500">
+                        <i class="fas fa-chart-line text-4xl mb-2"></i>
+                        <p>Gráfico de ventas (Chart.js)</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

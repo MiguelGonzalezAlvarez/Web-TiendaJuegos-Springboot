@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Odyssey - GameHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#ec4899',
+                        dark: '#1f2937',
+                        darker: '#111827',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-gradient { background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%); }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-darker border-b border-gray-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a th:href="@{/}" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 hero-gradient rounded-lg flex items-center justify-center">
+                        <i class="fas fa-gamepad text-white text-xl"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">Game<span class="text-primary">Hub</span></span>
+                </a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a th:href="@{/}" class="text-gray-300 hover:text-primary">Inicio</a>
+                    <a th:href="@{/catalogo}" class="text-primary">Catálogo</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <a th:href="@{/carrito}" class="relative p-2 text-gray-300 hover:text-primary">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span class="absolute -top-1 -right-1 bg-secondary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-800 py-4">
+        <div class="container mx-auto px-4">
+            <nav class="flex items-center text-sm">
+                <a th:href="@{/}" class="text-gray-400 hover:text-primary">Inicio</a>
+                <i class="fas fa-chevron-right text-gray-600 mx-2 text-xs"></i>
+                <a th:href="@{/catalogo}" class="text-gray-400 hover:text-primary">Catálogo</a>
+                <i class="fas fa-chevron-right text-gray-600 mx-2 text-xs"></i>
+                <span class="text-white">Cyber Odyssey</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Product Detail -->
+    <div class="flex-1 container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Product Image -->
+            <div class="space-y-4">
+                <div class="aspect-video bg-gray-800 rounded-xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop" alt="Cyber Odyssey" class="w-full h-full object-cover">
+                </div>
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden cursor-pointer border-2 border-primary">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200&h=120&fit=crop" alt="Thumb" class="w-full h-full object-cover">
+                    </div>
+                    <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:border hover:border-gray-600">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200&h=120&fit=crop" alt="Thumb" class="w-full h-full object-cover">
+                    </div>
+                    <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:border hover:border-gray-600">
+                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=200&h=120&fit=crop" alt="Thumb" class="w-full h-full object-cover">
+                    </div>
+                    <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:border hover:border-gray-600">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=120&fit=crop" alt="Thumb" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div>
+                <h1 class="text-4xl font-bold text-white mb-2">Cyber Odyssey 2077</h1>
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="text-gray-400">(4.5) · 2,456 opiniones</span>
+                </div>
+
+                <div class="mb-6">
+                    <span class="text-4xl font-bold text-white">$49.99</span>
+                </div>
+
+                <p class="text-gray-300 mb-6">
+                    Sumérgete en un mundo futurista donde la tecnología y la magia se entrelazan. Explora ciudades cibernéticas, enfréntate a enemigos únicos y descubre el secretos del multiverso en esta aventura épica.
+                </p>
+
+                <div class="space-y-4 mb-8">
+                    <div class="flex items-center gap-3">
+                        <i class="fab fa-windows text-gray-400 text-xl"></i>
+                        <span class="text-gray-300">PC</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-tag text-gray-400 text-xl"></i>
+                        <span class="text-gray-300">Género: Acción RPG</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-calendar text-gray-400 text-xl"></i>
+                        <span class="text-gray-300">Lanzamiento: 15 Mar 2025</span>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 mb-8">
+                    <div class="flex items-center bg-gray-800 rounded-lg">
+                        <button class="px-4 py-3 text-gray-400 hover:text-white" onclick="decrementQty()">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <input type="number" value="1" min="1" class="w-16 text-center bg-transparent text-white focus:outline-none">
+                        <button class="px-4 py-3 text-gray-400 hover:text-white" onclick="incrementQty()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <button class="flex-1 bg-primary hover:bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                        <i class="fas fa-cart-plus mr-2"></i>
+                        Añadir al carrito
+                    </button>
+                    <button class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-4 py-3 rounded-lg transition-colors">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="mt-12">
+            <div class="border-b border-gray-700">
+                <nav class="flex gap-8">
+                    <button class="pb-4 text-primary border-b-2 border-primary font-semibold" onclick="switchTab('desc')">Descripción</button>
+                    <button class="pb-4 text-gray-400 hover:text-white transition-colors" onclick="switchTab('req')">Requisitos</button>
+                    <button class="pb-4 text-gray-400 hover:text-white transition-colors" onclick="switchTab('reviews')">Opiniones</button>
+                </nav>
+            </div>
+
+            <div id="desc" class="py-8">
+                <h3 class="text-xl font-semibold text-white mb-4">Acerca de este juego</h3>
+                <p class="text-gray-300 leading-relaxed mb-4">
+                    Cyber Odyssey 2077 es un RPG de acción de mundo abierto desarrollado por NeoGames Studio. En un futuro donde la humanidad ha colonizado el espacio, tu misión es descubrir la verdad detrás de la conspiración que amenaza la galaxia.
+                </p>
+                <p class="text-gray-300 leading-relaxed mb-4">
+                    Con más de 100 horas de juego, un sistema de combate dinámico y una narrativa ramificada, cada decisión que tomes cambiará el destino del universo.
+                </p>
+                <h4 class="text-white font-semibold mb-2">Características principales:</h4>
+                <ul class="list-disc list-inside text-gray-300 space-y-1">
+                    <li>Mundo abierto masivo con 7 planetas únicos</li>
+                    <li>Sistema de personalización de personajes</li>
+                    <li>Combate táctico con armas futuristas</li>
+                    <li>Historia ramificada con múltiples finales</li>
+                    <li>Modo cooperativo online para 4 jugadores</li>
+                </ul>
+            </div>
+
+            <div id="req" class="py-8 hidden">
+                <h3 class="text-xl font-semibold text-white mb-4">Requisitos del sistema</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-800 rounded-lg p-6">
+                        <h4 class="text-primary font-semibold mb-4">Mínimos</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li><strong>OS:</strong> Windows 10 64-bit</li>
+                            <li><strong>Procesador:</strong> Intel Core i5-7600K</li>
+                            <li><strong>Memoria:</strong> 8 GB RAM</li>
+                            <li><strong>Gráficos:</strong> NVIDIA GTX 1060 6GB</li>
+                            <li><strong>Almacenamiento:</strong> 80 GB disponibles</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-800 rounded-lg p-6">
+                        <h4 class="text-primary font-semibold mb-4">Recomendados</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li><strong>OS:</strong> Windows 11 64-bit</li>
+                            <li><strong>Procesador:</strong> Intel Core i7-12700K</li>
+                            <li><strong>Memoria:</strong> 16 GB RAM</li>
+                            <li><strong>Gráficos:</strong> NVIDIA RTX 3070</li>
+                            <li><strong>Almacenamiento:</strong> 80 GB SSD</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="reviews" class="py-8 hidden">
+                <h3 class="text-xl font-semibold text-white mb-6">Opiniones de usuarios</h3>
+                <div class="space-y-6">
+                    <!-- Review 1 -->
+                    <div class="bg-gray-800 rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold">J</div>
+                                <div>
+                                    <p class="text-white font-semibold">Juan Pérez</p>
+                                    <p class="text-gray-500 text-sm">15 Ene 2026</p>
+                                </div>
+                            </div>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-300">¡Juego increíble! La historia es fascinante y el mundo abierto es enorme. Totalmente recomendado.</p>
+                    </div>
+                    <!-- Review 2 -->
+                    <div class="bg-gray-800 rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-secondary rounded-full flex items-center justify-center text-white font-bold">M</div>
+                                <div>
+                                    <p class="text-white font-semibold">María García</p>
+                                    <p class="text-gray-500 text-sm">10 Ene 2026</p>
+                                </div>
+                            </div>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-300">Muy buen juego, aunque tiene algunos bugs menores. La experiencia general es genial.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-bold text-white mb-6">Productos relacionados</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-gray-800 rounded-xl overflow-hidden hover:scale-105 transition-transform">
+                    <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b2b0f?w=300&h=180&fit=crop" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-white font-semibold mb-2">Fantasy Realms</h3>
+                        <span class="text-2xl font-bold text-white">$59.99</span>
+                    </div>
+                </div>
+                <div class="bg-gray-800 rounded-xl overflow-hidden hover:scale-105 transition-transform">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=180&fit=crop" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-white font-semibold mb-2">Starfield Explorer</h3>
+                        <span class="text-2xl font-bold text-white">$69.99</span>
+                    </div>
+                </div>
+                <div class="bg-gray-800 rounded-xl overflow-hidden hover:scale-105 transition-transform">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&h=180&fit=crop" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-white font-semibold mb-2">Baldur's Gate 3</h3>
+                        <span class="text-2xl font-bold text-white">$59.99</span>
+                    </div>
+                </div>
+                <div class="bg-gray-800 rounded-xl overflow-hidden hover:scale-105 transition-transform">
+                    <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=300&h=180&fit=crop" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-white font-semibold mb-2">Elden Ring</h3>
+                        <span class="text-2xl font-bold text-white">$59.99</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-darker border-t border-gray-800">
+        <div class="container mx-auto px-4 py-8 text-center text-gray-500">
+            <p>&copy; 2026 GameHub. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('#desc, #req, #reviews').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tab).classList.remove('hidden');
+            
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.classList.remove('text-primary', 'border-b-2', 'border-primary');
+                btn.classList.add('text-gray-400');
+            });
+            event.target.classList.add('text-primary', 'border-b-2', 'border-primary');
+            event.target.classList.remove('text-gray-400');
+        }
+
+        function incrementQty() {
+            const input = document.querySelector('input[type="number"]');
+            input.value = parseInt(input.value) + 1;
+        }
+
+        function decrementQty() {
+            const input = document.querySelector('input[type="number"]');
+            if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1;
+        }
+    </script>
+</body>
+</html>

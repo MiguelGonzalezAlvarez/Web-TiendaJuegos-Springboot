@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito - GameHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#ec4899',
+                        dark: '#1f2937',
+                        darker: '#111827',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-gradient { background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%); }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-darker border-b border-gray-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a th:href="@{/}" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 hero-gradient rounded-lg flex items-center justify-center">
+                        <i class="fas fa-gamepad text-white text-xl"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">Game<span class="text-primary">Hub</span></span>
+                </a>
+                <div class="flex items-center space-x-4">
+                    <a th:href="@{/carrito}" class="relative p-2 text-primary">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span class="absolute -top-1 -right-1 bg-secondary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex-1 container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-white mb-8">Carrito de compras</h1>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Cart Items -->
+            <div class="lg:w-2/3">
+                <!-- Cart Table -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden">
+                    <div class="hidden md:grid grid-cols-12 gap-4 p-4 bg-gray-700 text-gray-300 font-semibold">
+                        <div class="col-span-4">Producto</div>
+                        <div class="col-span-2 text-center">Precio</div>
+                        <div class="col-span-3 text-center">Cantidad</div>
+                        <div class="col-span-2 text-center">Subtotal</div>
+                        <div class="col-span-1"></div>
+                    </div>
+
+                    <!-- Item 1 -->
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 border-b border-gray-700 items-center">
+                        <div class="md:col-span-4 flex items-center gap-4">
+                            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=100&h=60&fit=crop" alt="Game" class="w-20 h-12 object-cover rounded">
+                            <div>
+                                <h3 class="text-white font-semibold">Cyber Odyssey 2077</h3>
+                                <p class="text-gray-500 text-sm">PC</p>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2 text-center">
+                            <span class="md:hidden text-gray-400">Precio: </span>
+                            <span class="text-white">$49.99</span>
+                        </div>
+                        <div class="md:col-span-3 flex justify-center">
+                            <div class="flex items-center bg-gray-700 rounded">
+                                <button class="px-3 py-2 text-gray-400 hover:text-white" onclick="updateQty(1, -1)">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <input type="number" value="1" min="1" class="w-12 text-center bg-transparent text-white focus:outline-none text-sm" readonly>
+                                <button class="px-3 py-2 text-gray-400 hover:text-white" onclick="updateQty(1, 1)">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2 text-center">
+                            <span class="md:hidden text-gray-400">Subtotal: </span>
+                            <span class="text-white font-semibold">$49.99</span>
+                        </div>
+                        <div class="md:col-span-1 flex justify-end">
+                            <button class="text-gray-400 hover:text-red-500 transition-colors">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 border-b border-gray-700 items-center">
+                        <div class="md:col-span-4 flex items-center gap-4">
+                            <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b2b0f?w=100&h=60&fit=crop" alt="Game" class="w-20 h-12 object-cover rounded">
+                            <div>
+                                <h3 class="text-white font-semibold">Fantasy Realms</h3>
+                                <p class="text-gray-500 text-sm">PC</p>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2 text-center">
+                            <span class="md:hidden text-gray-400">Precio: </span>
+                            <span class="text-gray-500 line-through text-sm">$59.99</span>
+                            <span class="text-white block">$41.99</span>
+                        </div>
+                        <div class="md:col-span-3 flex justify-center">
+                            <div class="flex items-center bg-gray-700 rounded">
+                                <button class="px-3 py-2 text-gray-400 hover:text-white" onclick="updateQty(2, -1)">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <input type="number" value="2" min="1" class="w-12 text-center bg-transparent text-white focus:outline-none text-sm" readonly>
+                                <button class="px-3 py-2 text-gray-400 hover:text-white" onclick="updateQty(2, 1)">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2 text-center">
+                            <span class="md:hidden text-gray-400">Subtotal: </span>
+                            <span class="text-white font-semibold">$83.98</span>
+                        </div>
+                        <div class="md:col-span-1 flex justify-end">
+                            <button class="text-gray-400 hover:text-red-500 transition-colors">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 items-center">
+                        <div class="md:col-span-4 flex items-center gap-4">
+                            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=100&h=60&fit=crop" alt="Game" class="w-20 h-12 object-cover rounded">
+                            <div>
+                                <h3 class="text-white font-semibold">Speed Demons</h3>
+                                <p class="text-gray-500 text-sm">PC</p>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2 text-center">
+                            <span class="md:hidden text-gray-400">Precio: </span>
+                            <span class="text-white">$39.99</span>
+                        </div>
+                        <div class="md:col-span-3 flex justify-center">
+                            <div class="flex items-center bg-gray-700 rounded">
+                                <button class="px-3 py-2 text-gray-400 hover:text-white" onclick="updateQty(3, -1)">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <input type="number" value="1" min="1" class="w-12 text-center bg-transparent text-white focus:outline-none text-sm" readonly>
+                                <button class="px-3 py-2 text-gray-400 hover:text-white" onclick="updateQty(3, 1)">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2 text-center">
+                            <span class="md:hidden text-gray-400">Subtotal: </span>
+                            <span class="text-white font-semibold">$39.99</span>
+                        </div>
+                        <div class="md:col-span-1 flex justify-end">
+                            <button class="text-gray-400 hover:text-red-500 transition-colors">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coupon -->
+                <div class="mt-6 bg-gray-800 rounded-xl p-6">
+                    <h3 class="text-white font-semibold mb-4">¿Tienes un cupón?</h3>
+                    <div class="flex gap-4">
+                        <input type="text" placeholder="Código del cupón" 
+                            class="flex-1 bg-gray-700 text-gray-100 px-4 py-2 rounded-lg border border-gray-600 focus:border-primary focus:outline-none">
+                        <button class="bg-primary hover:bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
+                            Aplicar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="lg:w-1/3">
+                <div class="bg-gray-800 rounded-xl p-6 sticky top-24">
+                    <h2 class="text-xl font-bold text-white mb-6">Resumen del pedido</h2>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex justify-between text-gray-300">
+                            <span>Subtotal (3 artículos)</span>
+                            <span>$173.96</span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                            <span>Descuento</span>
+                            <span class="text-green-500">-$17.99</span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                            <span>Envío</span>
+                            <span class="text-green-500">Gratis</span>
+                        </div>
+                        <hr class="border-gray-700">
+                        <div class="flex justify-between text-xl font-bold text-white">
+                            <span>Total</span>
+                            <span>$155.97</span>
+                        </div>
+                    </div>
+
+                    <a th:href="@{/checkout}" class="block w-full bg-primary hover:bg-indigo-600 text-white text-center px-6 py-3 rounded-lg font-semibold transition-colors mb-4">
+                        Proceder al pago
+                    </a>
+                    
+                    <a th:href="@{/catalogo}" class="block text-center text-gray-400 hover:text-primary transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Continuar comprando
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-darker border-t border-gray-800">
+        <div class="container mx-auto px-4 py-8 text-center text-gray-500">
+            <p>&copy; 2026 GameHub. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        function updateQty(item, change) {
+            console.log('Update qty:', item, change);
+        }
+    </script>
+</body>
+</html>

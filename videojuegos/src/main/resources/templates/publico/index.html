@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameHub - Tu tienda de videojuegos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#ec4899',
+                        dark: '#1f2937',
+                        darker: '#111827',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-darker border-b border-gray-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a th:href="@{/}" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 hero-gradient rounded-lg flex items-center justify-center">
+                        <i class="fas fa-gamepad text-white text-xl"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">Game<span class="text-primary">Hub</span></span>
+                </a>
+
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a th:href="@{/}" class="text-gray-300 hover:text-primary transition-colors">Inicio</a>
+                    <a th:href="@{/catalogo}" class="text-gray-300 hover:text-primary transition-colors">Catálogo</a>
+                    <a th:href="@{/ofertas}" class="text-gray-300 hover:text-primary transition-colors">Ofertas</a>
+                    <a th:href="@{/novedades}" class="text-gray-300 hover:text-primary transition-colors">Novedades</a>
+                </nav>
+
+                <div class="hidden lg:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" placeholder="Buscar juegos..." 
+                            class="w-full bg-gray-800 text-gray-100 px-4 py-2 pl-10 rounded-lg border border-gray-700 focus:border-primary focus:outline-none">
+                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <a th:href="@{/carrito}" class="relative p-2 text-gray-300 hover:text-primary transition-colors">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span class="absolute -top-1 -right-1 bg-secondary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
+                    </a>
+                    <a th:href="@{/wishlist}" class="p-2 text-gray-300 hover:text-primary transition-colors hidden sm:block">
+                        <i class="fas fa-heart text-xl"></i>
+                    </a>
+                    <div class="relative group">
+                        <button class="p-2 text-gray-300 hover:text-primary transition-colors">
+                            <i class="fas fa-user text-xl"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <a th:href="@{/login}" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white">Iniciar sesión</a>
+                            <a th:href="@{/registro}" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white">Registrarse</a>
+                            <a th:href="@{/perfil}" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white">Mi perfil</a>
+                            <a th:href="@{/admin}" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white">Admin</a>
+                        </div>
+                    </div>
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-300 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-darker border-t border-gray-800">
+            <div class="px-4 py-4">
+                <div class="mb-4">
+                    <input type="text" placeholder="Buscar juegos..." 
+                        class="w-full bg-gray-800 text-gray-100 px-4 py-2 rounded-lg border border-gray-700 focus:border-primary focus:outline-none">
+                </div>
+                <nav class="flex flex-col space-y-2">
+                    <a th:href="@{/}" class="text-gray-300 hover:text-primary transition-colors py-2">Inicio</a>
+                    <a th:href="@{/catalogo}" class="text-gray-300 hover:text-primary transition-colors py-2">Catálogo</a>
+                    <a th:href="@{/ofertas}" class="text-gray-300 hover:text-primary transition-colors py-2">Ofertas</a>
+                    <a th:href="@{/novedades}" class="text-gray-300 hover:text-primary transition-colors py-2">Novedades</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+        <div class="absolute inset-0 hero-gradient opacity-90"></div>
+        <div class="absolute inset-0" style="background-image: url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=1920'); background-size: cover; background-position: center; opacity: 0.3;"></div>
+        <div class="relative container mx-auto px-4 py-32">
+            <div class="max-w-3xl">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                    Descubre tu próximo<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-purple-200">juego favorito</span>
+                </h1>
+                <p class="text-xl text-gray-200 mb-8">
+                    Miles de videojuegos digitales al mejor precio. Envío instantáneo. Disponibles en todas las plataformas.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a th:href="@{/catalogo}" class="inline-flex items-center bg-white text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-compass mr-2"></i>
+                        Explorar catálogo
+                    </a>
+                    <a th:href="@{/ofertas}" class="inline-flex items-center border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition-colors">
+                        <i class="fas fa-tag mr-2"></i>
+                        Ver ofertas
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-bold text-white">Destacados</h2>
+                <a th:href="@{/catalogo}" class="text-primary hover:text-indigo-400 transition-colors">
+                    Ver todos <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Product Card 1 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden card-hover transition-all duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=250&fit=crop" alt="Game" class="w-full h-48 object-cover">
+                        <div class="absolute top-3 left-3 bg-primary text-white text-xs px-2 py-1 rounded">Nuevo</div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Cyber Odyssey 2077</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-400 text-sm ml-2">(4.5)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-white">$49.99</span>
+                            </div>
+                            <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden card-hover transition-all duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b2b0f?w=400&h=250&fit=crop" alt="Game" class="w-full h-48 object-cover">
+                        <div class="absolute top-3 left-3 bg-secondary text-white text-xs px-2 py-1 rounded">-30%</div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Fantasy Realms</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-400 text-sm ml-2">(5.0)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-xl text-gray-500 line-through">$59.99</span>
+                                <span class="text-2xl font-bold text-white ml-2">$41.99</span>
+                            </div>
+                            <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden card-hover transition-all duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=250&fit=crop" alt="Game" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Speed Demons</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-400 text-sm ml-2">(4.0)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-white">$39.99</span>
+                            </div>
+                            <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section class="py-16 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-bold text-white">Ofertas especiales</h2>
+                <a th:href="@{/ofertas}" class="text-primary hover:text-indigo-400 transition-colors">
+                    Ver todas <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Offer Card 1 -->
+                <div class="bg-gray-700 rounded-xl overflow-hidden card-hover transition-all duration-300 relative">
+                    <div class="absolute top-3 right-3 bg-secondary text-white text-sm font-bold px-3 py-1 rounded-full">-50%</div>
+                    <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=400&h=200&fit=crop" alt="Offer" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-white font-semibold mb-1">Elden Ring</h3>
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-500 line-through">$59.99</span>
+                            <span class="text-2xl font-bold text-primary">$29.99</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offer Card 2 -->
+                <div class="bg-gray-700 rounded-xl overflow-hidden card-hover transition-all duration-300 relative">
+                    <div class="absolute top-3 right-3 bg-secondary text-white text-sm font-bold px-3 py-1 rounded-full">-40%</div>
+                    <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=400&h=200&fit=crop" alt="Offer" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-white font-semibold mb-1">Zelda Legacy</h3>
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-500 line-through">$49.99</span>
+                            <span class="text-2xl font-bold text-primary">$29.99</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offer Card 3 -->
+                <div class="bg-gray-700 rounded-xl overflow-hidden card-hover transition-all duration-300 relative">
+                    <div class="absolute top-3 right-3 bg-secondary text-white text-sm font-bold px-3 py-1 rounded-full">-25%</div>
+                    <img src="https://images.unsplash.com/photo-1493711662062-fa541f7f3d24?w=400&h=200&fit=crop" alt="Offer" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-white font-semibold mb-1">Minecraft Pro</h3>
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-500 line-through">$29.99</span>
+                            <span class="text-2xl font-bold text-primary">$22.49</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offer Card 4 -->
+                <div class="bg-gray-700 rounded-xl overflow-hidden card-hover transition-all duration-300 relative">
+                    <div class="absolute top-3 right-3 bg-secondary text-white text-sm font-bold px-3 py-1 rounded-full">-35%</div>
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=200&fit=crop" alt="Offer" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-white font-semibold mb-1">GTA Ultimate</h3>
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-500 line-through">$69.99</span>
+                            <span class="text-2xl font-bold text-primary">$45.49</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Releases -->
+    <section class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-bold text-white">Recién lanzados</h2>
+                <a th:href="@{/novedades}" class="text-primary hover:text-indigo-400 transition-colors">
+                    Ver todos <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- New Game 1 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden card-hover transition-all duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=250&fit=crop" alt="New Game" class="w-full h-48 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-3 left-3">
+                            <span class="bg-green-500 text-white text-xs px-2 py-1 rounded">Recién arrived</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Starfield Explorer</h3>
+                        <p class="text-gray-400 text-sm mb-3">Aventura espacial开放世界</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-white">$69.99</span>
+                            <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Game 2 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden card-hover transition-all duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400&h=250&fit=crop" alt="New Game" class="w-full h-48 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-3 left-3">
+                            <span class="bg-green-500 text-white text-xs px-2 py-1 rounded">Nuevo</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Baldur's Gate 3</h3>
+                        <p class="text-gray-400 text-sm mb-3">RPG táctico</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-white">$59.99</span>
+                            <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Game 3 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden card-hover transition-all duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=400&h=250&fit=crop" alt="New Game" class="w-full h-48 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-3 left-3">
+                            <span class="bg-green-500 text-white text-xs px-2 py-1 rounded">Nuevo</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Spider-Man 2</h3>
+                        <p class="text-gray-400 text-sm mb-3">Acción aventura</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-white">$69.99</span>
+                            <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Genres -->
+    <section class="py-16 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-white text-center mb-12">Géneros populares</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <!-- Genre Card 1 -->
+                <a th:href="@{/catalogo(genero=accion)}" class="bg-gray-700 hover:bg-primary rounded-xl p-6 text-center transition-all duration-300 card-hover group">
+                    <i class="fas fa-crosshairs text-4xl text-primary group-hover:text-white mb-3 transition-colors"></i>
+                    <h3 class="text-white font-semibold">Acción</h3>
+                </a>
+
+                <!-- Genre Card 2 -->
+                <a th:href="@{/catalogo(genero=rpg)}" class="bg-gray-700 hover:bg-primary rounded-xl p-6 text-center transition-all duration-300 card-hover group">
+                    <i class="fas fa-dragon text-4xl text-primary group-hover:text-white mb-3 transition-colors"></i>
+                    <h3 class="text-white font-semibold">RPG</h3>
+                </a>
+
+                <!-- Genre Card 3 -->
+                <a th:href="@{/catalogo(genero=estrategia)}" class="bg-gray-700 hover:bg-primary rounded-xl p-6 text-center transition-all duration-300 card-hover group">
+                    <i class="fas fa-chess text-4xl text-primary group-hover:text-white mb-3 transition-colors"></i>
+                    <h3 class="text-white font-semibold">Estrategia</h3>
+                </a>
+
+                <!-- Genre Card 4 -->
+                <a th:href="@{/catalogo(genero=indie)}" class="bg-gray-700 hover:bg-primary rounded-xl p-6 text-center transition-all duration-300 card-hover group">
+                    <i class="fas fa-palette text-4xl text-primary group-hover:text-white mb-3 transition-colors"></i>
+                    <h3 class="text-white font-semibold">Indie</h3>
+                </a>
+
+                <!-- Genre Card 5 -->
+                <a th:href="@{/catalogo(genero=lucha)}" class="bg-gray-700 hover:bg-primary rounded-xl p-6 text-center transition-all duration-300 card-hover group">
+                    <i class="fas fa-fist-raised text-4xl text-primary group-hover:text-white mb-3 transition-colors"></i>
+                    <h3 class="text-white font-semibold">Lucha</h3>
+                </a>
+
+                <!-- Genre Card 6 -->
+                <a th:href="@{/catalogo(genero=deportes)}" class="bg-gray-700 hover:bg-primary rounded-xl p-6 text-center transition-all duration-300 card-hover group">
+                    <i class="fas fa-futbol text-4xl text-primary group-hover:text-white mb-3 transition-colors"></i>
+                    <h3 class="text-white font-semibold">Deportes</h3>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto text-center">
+                <div class="inline-flex items-center justify-center w-16 h-16 hero-gradient rounded-full mb-6">
+                    <i class="fas fa-envelope text-2xl text-white"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-white mb-4">No te pierdas ninguna oferta</h2>
+                <p class="text-gray-400 mb-8">Suscríbete a nuestro newsletter y recibe las mejores ofertas directamente en tu email.</p>
+                <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" placeholder="Tu correo electrónico" 
+                        class="flex-1 bg-gray-800 text-gray-100 px-4 py-3 rounded-lg border border-gray-700 focus:border-primary focus:outline-none">
+                    <button type="submit" class="bg-primary hover:bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors whitespace-nowrap">
+                        Suscribirse
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker border-t border-gray-800">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 hero-gradient rounded-lg flex items-center justify-center">
+                            <i class="fas fa-gamepad text-white text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">Game<span class="text-primary">Hub</span></span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Tu destino definitivo para los mejores videojuegos.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Enlaces rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a th:href="@{/catalogo}" class="text-gray-400 hover:text-primary transition-colors">Catálogo</a></li>
+                        <li><a th:href="@{/ofertas}" class="text-gray-400 hover:text-primary transition-colors">Ofertas</a></li>
+                        <li><a th:href="@{/novedades}" class="text-gray-400 hover:text-primary transition-colors">Novedades</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Soporte</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Ayuda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Términos</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Privacidad</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Recibe ofertas exclusivas.</p>
+                    <form class="space-y-2">
+                        <input type="email" placeholder="Tu email" 
+                            class="w-full bg-gray-800 text-gray-100 px-4 py-2 rounded-lg border border-gray-700 focus:border-primary focus:outline-none">
+                        <button type="submit" class="w-full bg-primary text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-600 transition-colors">
+                            Suscribirse
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+                <p>&copy; 2026 GameHub. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
+</body>
+</html>

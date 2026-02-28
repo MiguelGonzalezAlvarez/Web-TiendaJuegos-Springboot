@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - GameHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#ec4899',
+                        dark: '#1f2937',
+                        darker: '#111827',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-gradient { background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%); }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2); }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-darker border-b border-gray-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a th:href="@{/}" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 hero-gradient rounded-lg flex items-center justify-center">
+                        <i class="fas fa-gamepad text-white text-xl"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">Game<span class="text-primary">Hub</span></span>
+                </a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a th:href="@{/}" class="text-gray-300 hover:text-primary transition-colors">Inicio</a>
+                    <a th:href="@{/catalogo}" class="text-primary transition-colors">Catálogo</a>
+                    <a th:href="@{/ofertas}" class="text-gray-300 hover:text-primary transition-colors">Ofertas</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <a th:href="@{/carrito}" class="relative p-2 text-gray-300 hover:text-primary">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span class="absolute -top-1 -right-1 bg-secondary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
+                    </a>
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-300 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex-1 container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Filters -->
+            <aside class="lg:w-1/4">
+                <div class="bg-gray-800 rounded-xl p-6 sticky top-24">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-white">Filtros</h2>
+                        <button class="text-primary text-sm hover:underline">Limpiar</button>
+                    </div>
+
+                    <!-- Genre Filter -->
+                    <div class="mb-6">
+                        <h3 class="text-white font-semibold mb-3">Género</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gray-600 text-primary bg-gray-700 focus:ring-primary">
+                                <span class="ml-2">Acción</span>
+                                <span class="ml-auto text-gray-500 text-sm">(124)</span>
+                            </label>
+                            <label class="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gray-600 text-primary bg-gray-700 focus:ring-primary">
+                                <span class="ml-2">RPG</span>
+                                <span class="ml-auto text-gray-500 text-sm">(89)</span>
+                            </label>
+                            <label class="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gray-600 text-primary bg-gray-700 focus:ring-primary">
+                                <span class="ml-2">Estrategia</span>
+                                <span class="ml-auto text-gray-500 text-sm">(56)</span>
+                            </label>
+                            <label class="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gray-600 text-primary bg-gray-700 focus:ring-primary">
+                                <span class="ml-2">Indie</span>
+                                <span class="ml-auto text-gray-500 text-sm">(78)</span>
+                            </label>
+                            <label class="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gray-600 text-primary bg-gray-700 focus:ring-primary">
+                                <span class="ml-2">Deportes</span>
+                                <span class="ml-auto text-gray-500 text-sm">(45)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Platform Filter -->
+                    <div class="mb-6">
+                        <h3 class="text-white font-semibold mb-3">Plataforma</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gray-600 text-primary bg-gray-700">
+                                <i class="fab fa-windows ml-2"></i>
+                                <span class="ml-1">PC</span>
+                            </label>
+                            <label class="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gray-600 text-primary bg-gray-700">
+                                <i class="fab fa-playstation ml-2"></i>
+                                <span class="ml-1">PlayStation</span>
+                            </label>
+                            <label class="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gray-600 text-primary bg-gray-700">
+                                <i class="fab fa-xbox ml-2"></i>
+                                <span class="ml-1">Xbox</span>
+                            </label>
+                            <label class="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gray-600 text-primary bg-gray-700">
+                                <i class="fab fa-nintendo-switch ml-2"></i>
+                                <span class="ml-1">Nintendo</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="mb-6">
+                        <h3 class="text-white font-semibold mb-3">Rango de precio</h3>
+                        <div class="space-y-3">
+                            <input type="range" min="0" max="100" value="50" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                            <div class="flex justify-between text-sm text-gray-400">
+                                <span>$0</span>
+                                <span>$100+</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rating Filter -->
+                    <div>
+                        <h3 class="text-white font-semibold mb-3">Valoración</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gray-600 text-primary bg-gray-700">
+                                <div class="flex text-yellow-400 ml-2">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <span class="ml-2">5 estrellas</span>
+                            </label>
+                            <label class="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gray-600 text-primary bg-gray-700">
+                                <div class="flex text-yellow-400 ml-2">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </div>
+                                <span class="ml-2">4+ estrellas</span>
+                            </label>
+                            <label class="flex items-center text-gray-300 hover:text-white cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gray-600 text-primary bg-gray-700">
+                                <div class="flex text-yellow-400 ml-2">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                                </div>
+                                <span class="ml-2">3+ estrellas</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Products Grid -->
+            <div class="lg:w-3/4">
+                <!-- Toolbar -->
+                <div class="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
+                    <p class="text-gray-400">Mostrando <span class="text-white">1-12</span> de <span class="text-white">248</span> juegos</p>
+                    <div class="flex items-center gap-4">
+                        <select class="bg-gray-800 text-gray-300 px-4 py-2 rounded-lg border border-gray-700 focus:border-primary focus:outline-none">
+                            <option>Ordenar por: Destacados</option>
+                            <option>Precio: menor a mayor</option>
+                            <option>Precio: mayor a menor</option>
+                            <option>Valoración</option>
+                            <option>Nombre A-Z</option>
+                        </select>
+                        <select class="bg-gray-800 text-gray-300 px-4 py-2 rounded-lg border border-gray-700 focus:border-primary focus:outline-none">
+                            <option>12 por página</option>
+                            <option>24 por página</option>
+                            <option>48 por página</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <!-- Product Card 1 -->
+                    <div class="bg-gray-800 rounded-xl overflow-hidden card-hover transition-all duration-300">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=250&fit=crop" alt="Game" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-white mb-2">Cyber Odyssey</h3>
+                            <div class="flex text-yellow-400 text-sm mb-2">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-white">$49.99</span>
+                                <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg"><i class="fas fa-cart-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 2 -->
+                    <div class="bg-gray-800 rounded-xl overflow-hidden card-hover transition-all duration-300">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b2b0f?w=400&h=250&fit=crop" alt="Game" class="w-full h-48 object-cover">
+                            <div class="absolute top-3 left-3 bg-secondary text-white text-xs px-2 py-1 rounded">-30%</div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-white mb-2">Fantasy Realms</h3>
+                            <div class="flex text-yellow-400 text-sm mb-2">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div><span class="text-gray-500 line-through">$59.99</span><span class="text-2xl font-bold text-white ml-2">$41.99</span></div>
+                                <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg"><i class="fas fa-cart-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 3 -->
+                    <div class="bg-gray-800 rounded-xl overflow-hidden card-hover transition-all duration-300">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=250&fit=crop" alt="Game" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-white mb-2">Speed Demons</h3>
+                            <div class="flex text-yellow-400 text-sm mb-2">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-white">$39.99</span>
+                                <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg"><i class="fas fa-cart-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 4 -->
+                    <div class="bg-gray-800 rounded-xl overflow-hidden card-hover transition-all duration-300">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=250&fit=crop" alt="Game" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-white mb-2">Starfield Explorer</h3>
+                            <div class="flex text-yellow-400 text-sm mb-2">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-white">$69.99</span>
+                                <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg"><i class="fas fa-cart-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 5 -->
+                    <div class="bg-gray-800 rounded-xl overflow-hidden card-hover transition-all duration-300">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=400&h=250&fit=crop" alt="Game" class="w-full h-48 object-cover">
+                            <div class="absolute top-3 left-3 bg-green-500 text-white text-xs px-2 py-1 rounded">Nuevo</div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-white mb-2">Elden Ring</h3>
+                            <div class="flex text-yellow-400 text-sm mb-2">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-white">$59.99</span>
+                                <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg"><i class="fas fa-cart-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 6 -->
+                    <div class="bg-gray-800 rounded-xl overflow-hidden card-hover transition-all duration-300">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400&h=250&fit=crop" alt="Game" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-white mb-2">Baldur's Gate 3</h3>
+                            <div class="flex text-yellow-400 text-sm mb-2">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-white">$59.99</span>
+                                <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg"><i class="fas fa-cart-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="mt-8 flex justify-center">
+                    <nav class="flex items-center gap-2">
+                        <a href="#" class="px-4 py-2 bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white transition-colors">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                        <a href="#" class="px-4 py-2 bg-primary text-white rounded-lg">1</a>
+                        <a href="#" class="px-4 py-2 bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white">2</a>
+                        <a href="#" class="px-4 py-2 bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white">3</a>
+                        <span class="px-2 text-gray-500">...</span>
+                        <a href="#" class="px-4 py-2 bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white">20</a>
+                        <a href="#" class="px-4 py-2 bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-darker border-t border-gray-800">
+        <div class="container mx-auto px-4 py-8 text-center text-gray-500">
+            <p>&copy; 2026 GameHub. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist - GameHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#ec4899',
+                        dark: '#1f2937',
+                        darker: '#111827',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-gradient { background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%); }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-darker border-b border-gray-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a th:href="@{/}" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 hero-gradient rounded-lg flex items-center justify-center">
+                        <i class="fas fa-gamepad text-white text-xl"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">Game<span class="text-primary">Hub</span></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex-1 container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar -->
+            <aside class="lg:w-1/4">
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="text-center mb-6">
+                        <div class="w-20 h-20 mx-auto bg-primary rounded-full flex items-center justify-center text-3xl font-bold text-white mb-3">JP</div>
+                    </div>
+                    <nav class="space-y-2">
+                        <a th:href="@{/perfil}" class="flex items-center gap-3 px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-lg"><i class="fas fa-user"></i> Mi perfil</a>
+                        <a th:href="@{/pedidos}" class="flex items-center gap-3 px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-lg"><i class="fas fa-box"></i> Mis pedidos</a>
+                        <a th:href="@{/wishlist}" class="flex items-center gap-3 px-4 py-2 bg-primary text-white rounded-lg"><i class="fas fa-heart"></i> Wishlist</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Wishlist -->
+            <div class="lg:w-3/4">
+                <h1 class="text-2xl font-bold text-white mb-6">Mi wishlist</h1>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Wishlist Item 1 -->
+                    <div class="bg-gray-800 rounded-xl overflow-hidden group">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&h=180&fit=crop" class="w-full h-40 object-cover">
+                            <button class="absolute top-2 right-2 bg-gray-900/80 text-red-500 w-8 h-8 rounded-full flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-white font-semibold mb-2">Cyber Odyssey 2077</h3>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-white">$49.99</span>
+                                <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm">
+                                    <i class="fas fa-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wishlist Item 2 -->
+                    <div class="bg-gray-800 rounded-xl overflow-hidden group">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=180&fit=crop" class="w-full h-40 object-cover">
+                            <button class="absolute top-2 right-2 bg-gray-900/80 text-red-500 w-8 h-8 rounded-full flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-white font-semibold mb-2">Starfield Explorer</h3>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-white">$69.99</span>
+                                <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm">
+                                    <i class="fas fa-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wishlist Item 3 -->
+                    <div class="bg-gray-800 rounded-xl overflow-hidden group">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=300&h=180&fit=crop" class="w-full h-40 object-cover">
+                            <button class="absolute top-2 right-2 bg-gray-900/80 text-red-500 w-8 h-8 rounded-full flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-white font-semibold mb-2">Elden Ring</h3>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-white">$59.99</span>
+                                <button class="bg-primary hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm">
+                                    <i class="fas fa-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-darker border-t border-gray-800 py-8 text-center text-gray-500">
+        <p>&copy; 2026 GameHub.</p>
+    </footer>
+</body>
+</html>

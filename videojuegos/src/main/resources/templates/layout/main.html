@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:fragment="title">GameHub - Tu tienda de videojuegos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#ec4899',
+                        dark: '#1f2937',
+                        darker: '#111827',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+        .btn-primary {
+            @apply bg-primary text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-indigo-600 hover:shadow-lg;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header th:fragment="header" class="bg-darker border-b border-gray-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a th:href="@{/}" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 hero-gradient rounded-lg flex items-center justify-center">
+                        <i class="fas fa-gamepad text-white text-xl"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">Game<span class="text-primary">Hub</span></span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a th:href="@{/}" class="text-gray-300 hover:text-primary transition-colors">Inicio</a>
+                    <a th:href="@{/catalogo}" class="text-gray-300 hover:text-primary transition-colors">Catálogo</a>
+                    <a th:href="@{/ofertas}" class="text-gray-300 hover:text-primary transition-colors">Ofertas</a>
+                    <a th:href="@{/novedades}" class="text-gray-300 hover:text-primary transition-colors">Novedades</a>
+                </nav>
+
+                <!-- Search Bar -->
+                <div class="hidden lg:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" placeholder="Buscar juegos..." 
+                            class="w-full bg-gray-800 text-gray-100 px-4 py-2 pl-10 rounded-lg border border-gray-700 focus:border-primary focus:outline-none transition-colors">
+                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                    </div>
+                </div>
+
+                <!-- Icons -->
+                <div class="flex items-center space-x-4">
+                    <a th:href="@{/carrito}" class="relative p-2 text-gray-300 hover:text-primary transition-colors">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span class="absolute -top-1 -right-1 bg-secondary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
+                    </a>
+                    <a th:href="@{/wishlist}" class="p-2 text-gray-300 hover:text-primary transition-colors hidden sm:block">
+                        <i class="fas fa-heart text-xl"></i>
+                    </a>
+                    <div class="relative group">
+                        <button class="p-2 text-gray-300 hover:text-primary transition-colors">
+                            <i class="fas fa-user text-xl"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <a th:href="@{/login}" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white">Iniciar sesión</a>
+                            <a th:href="@{/registro}" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white">Registrarse</a>
+                            <a th:href="@{/perfil}" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white">Mi perfil</a>
+                            <a th:href="@{/admin}" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white">Admin</a>
+                        </div>
+                    </div>
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-300 hover:text-primary">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-darker border-t border-gray-800">
+            <div class="px-4 py-4">
+                <div class="mb-4">
+                    <input type="text" placeholder="Buscar juegos..." 
+                        class="w-full bg-gray-800 text-gray-100 px-4 py-2 rounded-lg border border-gray-700 focus:border-primary focus:outline-none">
+                </div>
+                <nav class="flex flex-col space-y-2">
+                    <a th:href="@{/}" class="text-gray-300 hover:text-primary transition-colors py-2">Inicio</a>
+                    <a th:href="@{/catalogo}" class="text-gray-300 hover:text-primary transition-colors py-2">Catálogo</a>
+                    <a th:href="@{/ofertas}" class="text-gray-300 hover:text-primary transition-colors py-2">Ofertas</a>
+                    <a th:href="@{/novedades}" class="text-gray-300 hover:text-primary transition-colors py-2">Novedades</a>
+                    <a th:href="@{/perfil}" class="text-gray-300 hover:text-primary transition-colors py-2">Mi perfil</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+        <div th:replace="~{${content}}"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer th:fragment="footer" class="bg-darker border-t border-gray-800 mt-auto">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 hero-gradient rounded-lg flex items-center justify-center">
+                            <i class="fas fa-gamepad text-white text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">Game<span class="text-primary">Hub</span></span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Tu destino definitivo para los mejores videojuegos. Encuentra tus juegos favoritos al mejor precio.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Enlaces rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a th:href="@{/catalogo}" class="text-gray-400 hover:text-primary transition-colors">Catálogo</a></li>
+                        <li><a th:href="@{/ofertas}" class="text-gray-400 hover:text-primary transition-colors">Ofertas</a></li>
+                        <li><a th:href="@{/novedades}" class="text-gray-400 hover:text-primary transition-colors">Novedades</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Géneros</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Plataformas</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Soporte</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Ayuda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Preguntas frecuentes</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Términos y condiciones</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Política de privacidad</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Suscríbete para recibir ofertas exclusivas y novedades.</p>
+                    <form class="space-y-2">
+                        <input type="email" placeholder="Tu email" 
+                            class="w-full bg-gray-800 text-gray-100 px-4 py-2 rounded-lg border border-gray-700 focus:border-primary focus:outline-none">
+                        <button type="submit" class="w-full bg-primary text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-600 transition-colors">
+                            Suscribirse
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+                <p>&copy; 2026 GameHub. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
+</body>
+</html>
