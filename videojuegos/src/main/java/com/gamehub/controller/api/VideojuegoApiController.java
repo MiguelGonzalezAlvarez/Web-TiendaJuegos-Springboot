@@ -21,13 +21,15 @@ public class VideojuegoApiController {
     private final VideojuegoService videogameService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<VideojuegoResponse>>>> listar(
+    public ResponseEntity<ApiResponse<List<VideojuegoResponse>>> listar(
             @RequestParam(defaultValue = "0") int pagina,
             @RequestParam(defaultValue = "12") int tamanho,
             @RequestParam(defaultValue = "fechaCreacion") String ordenarPor) {
         
         List<Videojuego> videojuegos = videogameService.listarTodos(pagina, tamanho, ordenarPor);
-        Page<VideojuegoResponse> response = PageRequest.of(pagina, tamanho).map(v -> toResponse(v));
+        List<VideojuegoResponse> response = videojuegos.stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
         
         return ResponseEntity.ok(ApiResponse.success(response));
     }
